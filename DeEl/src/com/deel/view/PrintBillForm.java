@@ -1,5 +1,6 @@
 package com.deel.view;
 
+import com.deel.model.ProductModel;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import javax.swing.event.DocumentEvent;
@@ -85,8 +86,13 @@ public class PrintBillForm extends javax.swing.JFrame {
         jPanelPrintBill.requestFocus();
         preparePrintBill();
     }
+    private void updateStocks(){
+        for(int i=0; i< dtm.getRowCount(); i++){
+            new ProductModel().updateStocks(dtm.getValueAt(i, BillerForm.TABLE_BILL_DETAIL_COLUMN_CODE).toString(), Integer.parseInt(dtm.getValueAt(i, BillerForm.TABLE_BILL_DETAIL_COLUMN_QUANTITY).toString()));
+        }
+    }
 
-    public PrintBillForm(DefaultTableModel dtm) {
+    public PrintBillForm(DefaultTableModel dtm,String total,String paid,String balace,String customerName) {
         this.dtm=dtm;
         initComponents();
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -186,6 +192,7 @@ public class PrintBillForm extends javax.swing.JFrame {
                 isPrintSuccess=jTextAreaPrintBill.print();
                 if(isPrintSuccess){
                     javax.swing.JOptionPane.showMessageDialog(null, "Success", "Bill sent for printing", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+                    updateStocks();
                 }else{
                     javax.swing.JOptionPane.showMessageDialog(null, "Failure", "Printing failure", javax.swing.JOptionPane.ERROR_MESSAGE);
                 }

@@ -1,6 +1,6 @@
 package com.deel.test;
 
-import com.deel.model.Search;
+import com.deel.model.ProductModel;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.event.DocumentEvent;
@@ -21,7 +21,7 @@ public class SearchPanel extends javax.swing.JPanel {
 
     //This is the module for static search.
     public void fetchAllProduct(){
-        productList=new Search().fetchAllProduct();
+        productList=new ProductModel().fetchAllProduct();
         new Thread(new Runnable(){
             @Override
            public void run(){
@@ -36,7 +36,7 @@ public class SearchPanel extends javax.swing.JPanel {
     private void jComboBoxContentChange(String q){
         final String q1=q;
         if(q.length()>=3){
-            productList=new Search().dynamicSearch(q);
+            productList=new ProductModel().dynamicSearch(q);
             if(productList != null){
                 new Thread(new Runnable(){
                     @Override

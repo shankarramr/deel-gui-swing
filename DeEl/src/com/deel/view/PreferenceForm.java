@@ -1,6 +1,5 @@
 package com.deel.view;
 
-import java.awt.event.ItemEvent;
 import java.util.HashMap;
 
 /**
@@ -12,8 +11,6 @@ public class PreferenceForm extends javax.swing.JFrame {
 
     private void customCode(){
         preferenceMap=new HashMap();
-        dynamicSearchGroup.add(jRadioButtonDynamicSearchOn);
-        dynamicSearchGroup.add(jRadioButtonDynamicSearchOff);
     }
 
     public PreferenceForm() {
@@ -32,21 +29,14 @@ public class PreferenceForm extends javax.swing.JFrame {
     private void initComponents() {
 
         dynamicSearchGroup = new javax.swing.ButtonGroup();
-        jCheckBoxTax = new javax.swing.JCheckBox();
         jButtonSubmit = new javax.swing.JButton();
         jButtonCancel = new javax.swing.JButton();
-        jRadioButtonDynamicSearchOn = new javax.swing.JRadioButton();
-        jRadioButtonDynamicSearchOff = new javax.swing.JRadioButton();
         jLabelDynamicSearch = new javax.swing.JLabel();
+        jToggleButton1 = new javax.swing.JToggleButton();
+        jToggleButtonTax = new javax.swing.JToggleButton();
+        jLabelTax = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        jCheckBoxTax.setText("Tax");
-        jCheckBoxTax.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                jCheckBoxTaxItemStateChanged(evt);
-            }
-        });
 
         jButtonSubmit.setText("Submit");
         jButtonSubmit.addActionListener(new java.awt.event.ActionListener() {
@@ -57,21 +47,9 @@ public class PreferenceForm extends javax.swing.JFrame {
 
         jButtonCancel.setText("Cancel");
 
-        jRadioButtonDynamicSearchOn.setText("On");
-        jRadioButtonDynamicSearchOn.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                jRadioButtonDynamicSearchOnItemStateChanged(evt);
-            }
-        });
+        jLabelDynamicSearch.setText("Dynamic Search");
 
-        jRadioButtonDynamicSearchOff.setText("Off");
-        jRadioButtonDynamicSearchOff.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                jRadioButtonDynamicSearchOffItemStateChanged(evt);
-            }
-        });
-
-        jLabelDynamicSearch.setText("DynamicSearch");
+        jLabelTax.setText("Tax");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -79,32 +57,40 @@ public class PreferenceForm extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabelDynamicSearch)
-                                .addGap(18, 18, 18)
-                                .addComponent(jRadioButtonDynamicSearchOn))
-                            .addComponent(jButtonSubmit, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(jLabelDynamicSearch)
+                            .addComponent(jLabelTax, javax.swing.GroupLayout.Alignment.LEADING))
+                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jRadioButtonDynamicSearchOff)
-                            .addComponent(jButtonCancel)))
-                    .addComponent(jCheckBoxTax))
-                .addContainerGap(99, Short.MAX_VALUE))
+                            .addComponent(jToggleButtonTax, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jToggleButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(91, 91, 91))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jButtonSubmit, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButtonCancel)
+                        .addGap(69, 69, 69))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jCheckBoxTax)
-                .addGap(21, 21, 21)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jRadioButtonDynamicSearchOn)
-                    .addComponent(jRadioButtonDynamicSearchOff)
-                    .addComponent(jLabelDynamicSearch))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 180, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(26, 26, 26)
+                        .addComponent(jLabelDynamicSearch))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jToggleButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(jToggleButtonTax, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(31, 31, 31)
+                        .addComponent(jLabelTax)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 154, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonSubmit)
                     .addComponent(jButtonCancel))
@@ -114,22 +100,6 @@ public class PreferenceForm extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jCheckBoxTaxItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jCheckBoxTaxItemStateChanged
-        if(evt.getStateChange() == ItemEvent.SELECTED){
-            preferenceMap.put("tax", true);
-        }else if(evt.getStateChange() == ItemEvent.DESELECTED){
-            preferenceMap.put("tax", false);
-        }
-    }//GEN-LAST:event_jCheckBoxTaxItemStateChanged
-
-    private void jRadioButtonDynamicSearchOnItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jRadioButtonDynamicSearchOnItemStateChanged
-        preferenceMap.put("dynamicSearch", true);
-    }//GEN-LAST:event_jRadioButtonDynamicSearchOnItemStateChanged
-
-    private void jRadioButtonDynamicSearchOffItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jRadioButtonDynamicSearchOffItemStateChanged
-        preferenceMap.put("dynamicSearch", false);
-    }//GEN-LAST:event_jRadioButtonDynamicSearchOffItemStateChanged
-
     private void jButtonSubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSubmitActionPerformed
         return;
     }//GEN-LAST:event_jButtonSubmitActionPerformed
@@ -138,10 +108,10 @@ public class PreferenceForm extends javax.swing.JFrame {
     private javax.swing.ButtonGroup dynamicSearchGroup;
     private javax.swing.JButton jButtonCancel;
     private javax.swing.JButton jButtonSubmit;
-    private javax.swing.JCheckBox jCheckBoxTax;
     private javax.swing.JLabel jLabelDynamicSearch;
-    private javax.swing.JRadioButton jRadioButtonDynamicSearchOff;
-    private javax.swing.JRadioButton jRadioButtonDynamicSearchOn;
+    private javax.swing.JLabel jLabelTax;
+    private javax.swing.JToggleButton jToggleButton1;
+    private javax.swing.JToggleButton jToggleButtonTax;
     // End of variables declaration//GEN-END:variables
 
 }
