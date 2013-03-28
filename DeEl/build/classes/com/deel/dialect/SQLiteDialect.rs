@@ -1,0 +1,1 @@
+com.deel.model.SQLiteDialect

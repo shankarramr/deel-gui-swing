@@ -24,11 +24,46 @@
             <Property name="text" type="java.lang.String" value="Edit"/>
           </Properties>
           <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="jMenuItemEditPreferences">
+            <Menu class="javax.swing.JMenu" name="jMenuPreferences">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Preferences"/>
               </Properties>
-            </MenuItem>
+              <SubComponents>
+                <MenuItem class="javax.swing.JCheckBoxMenuItem" name="jCheckBoxMenuItemPrefrencesDynamicSearch">
+                  <Properties>
+                    <Property name="selected" type="boolean" value="true"/>
+                    <Property name="text" type="java.lang.String" value="Dynamic Search"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="jCheckBoxMenuItemPrefrencesDynamicSearchItemStateChanged"/>
+                  </Events>
+                </MenuItem>
+                <MenuItem class="javax.swing.JCheckBoxMenuItem" name="jCheckBoxMenuItemPreferencesTax">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Tax"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="jCheckBoxMenuItemPreferencesTaxItemStateChanged"/>
+                  </Events>
+                </MenuItem>
+                <MenuItem class="javax.swing.JCheckBoxMenuItem" name="jCheckBoxMenuItemManualBilling">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Manual Billing"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="jCheckBoxMenuItemManualBillingItemStateChanged"/>
+                  </Events>
+                </MenuItem>
+                <MenuItem class="javax.swing.JMenuItem" name="jMenuItemPreferencesAddProduct">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Add Product"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItemPreferencesAddProductActionPerformed"/>
+                  </Events>
+                </MenuItem>
+              </SubComponents>
+            </Menu>
           </SubComponents>
         </Menu>
         <Menu class="javax.swing.JMenu" name="jMenuHelp">
@@ -59,7 +94,7 @@
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="menuBar" type="java.lang.String" value="jMenuBar1"/>
-    <SyntheticProperty name="formSize" type="java.awt.Dimension" value="-84,-19,0,5,115,114,0,18,106,97,118,97,46,97,119,116,46,68,105,109,101,110,115,105,111,110,65,-114,-39,-41,-84,95,68,20,2,0,2,73,0,6,104,101,105,103,104,116,73,0,5,119,105,100,116,104,120,112,0,0,2,-122,0,0,3,86"/>
+    <SyntheticProperty name="formSize" type="java.awt.Dimension" value="-84,-19,0,5,115,114,0,18,106,97,118,97,46,97,119,116,46,68,105,109,101,110,115,105,111,110,65,-114,-39,-41,-84,95,68,20,2,0,2,73,0,6,104,101,105,103,104,116,73,0,5,119,105,100,116,104,120,112,0,0,2,-109,0,0,3,86"/>
     <SyntheticProperty name="formSizePolicy" type="int" value="0"/>
     <SyntheticProperty name="generateSize" type="boolean" value="true"/>
     <SyntheticProperty name="generateCenter" type="boolean" value="true"/>
@@ -84,7 +119,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="jPanelSearch" min="-2" max="-2" attributes="0"/>
                   <Group type="102" attributes="0">
-                      <Component id="jPanelProductDetail" min="-2" pref="338" max="-2" attributes="0"/>
+                      <Component id="jPanelProductDetail" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" max="-2" attributes="0"/>
                       <Component id="jPanelBillDetail" min="-2" max="-2" attributes="0"/>
                   </Group>
@@ -102,7 +137,7 @@
                   <Component id="jPanelProductDetail" max="32767" attributes="0"/>
                   <Component id="jPanelBillDetail" max="32767" attributes="0"/>
               </Group>
-              <EmptySpace pref="35" max="32767" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -120,44 +155,38 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" attributes="0">
+              <Group type="102" alignment="0" attributes="0">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="jLabelCategory" alignment="0" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabelBrand" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Component id="jLabelPrice" alignment="0" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabelCode" alignment="0" min="-2" pref="50" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="jButtonAddToCart" min="-2" pref="115" max="-2" attributes="0"/>
+                      <Component id="jTextFieldTax" min="-2" pref="200" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="jTextFieldPrice" pref="200" max="32767" attributes="0"/>
+                          <Component id="jComboBoxQuantity" min="-2" pref="75" max="-2" attributes="0"/>
+                          <Component id="jTextFieldBrand" alignment="0" max="32767" attributes="0"/>
+                          <Component id="jTextFieldCategory" alignment="0" max="32767" attributes="0"/>
+                          <Component id="jTextFieldCode" alignment="0" max="32767" attributes="0"/>
+                      </Group>
+                      <Component id="jTextFieldAmount" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace min="0" pref="18" max="32767" attributes="0"/>
+              </Group>
+              <Group type="102" attributes="0">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="jLabelPrice" alignment="0" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabelTax" alignment="0" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabelQuantity" alignment="0" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabelAmount" alignment="0" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" attributes="0">
-                          <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jComboBoxQuantity" min="-2" pref="75" max="-2" attributes="0"/>
-                              <Component id="jTextFieldTax" min="-2" pref="200" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="jTextFieldPrice" pref="200" max="32767" attributes="0"/>
-                                  <Component id="jTextFieldBrand" max="32767" attributes="0"/>
-                                  <Component id="jTextFieldCategory" max="32767" attributes="0"/>
-                                  <Component id="jTextFieldCode" alignment="0" max="32767" attributes="0"/>
-                              </Group>
-                          </Group>
-                      </Group>
-                      <Group type="102" alignment="1" attributes="0">
-                          <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jButtonAddToCart" min="-2" pref="115" max="-2" attributes="0"/>
-                              <Component id="jTextFieldAmount" min="-2" pref="200" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace min="-2" pref="99" max="-2" attributes="0"/>
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace min="-2" pref="47" max="-2" attributes="0"/>
+                          <Component id="jLabelImage" min="-2" pref="217" max="-2" attributes="0"/>
                       </Group>
                   </Group>
-                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-              </Group>
-              <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace min="-2" pref="64" max="-2" attributes="0"/>
-                  <Component id="jLabelImage" min="-2" pref="200" max="-2" attributes="0"/>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
@@ -165,7 +194,7 @@
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace max="32767" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabelCode" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jTextFieldCode" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -200,10 +229,10 @@
                       <Component id="jLabelAmount" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jTextFieldAmount" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace max="-2" attributes="0"/>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="jButtonAddToCart" min="-2" pref="34" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jLabelImage" min="-2" pref="124" max="-2" attributes="0"/>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <Component id="jLabelImage" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -220,8 +249,10 @@
           <Properties>
             <Property name="editable" type="boolean" value="false"/>
             <Property name="focusable" type="boolean" value="false"/>
-            <Property name="requestFocusEnabled" type="boolean" value="false"/>
           </Properties>
+          <Events>
+            <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jTextFieldCodeFocusGained"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabelCategory">
           <Properties>
@@ -237,31 +268,23 @@
             <Property name="requestFocusEnabled" type="boolean" value="false"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="jLabelPrice">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Price"/>
-            <Property name="focusable" type="boolean" value="false"/>
-            <Property name="requestFocusEnabled" type="boolean" value="false"/>
-          </Properties>
-        </Component>
         <Component class="javax.swing.JTextField" name="jTextFieldCategory">
           <Properties>
             <Property name="editable" type="boolean" value="false"/>
             <Property name="focusable" type="boolean" value="false"/>
-            <Property name="requestFocusEnabled" type="boolean" value="false"/>
           </Properties>
+          <Events>
+            <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jTextFieldCategoryFocusGained"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextFieldBrand">
           <Properties>
             <Property name="editable" type="boolean" value="false"/>
             <Property name="focusable" type="boolean" value="false"/>
-            <Property name="requestFocusEnabled" type="boolean" value="false"/>
           </Properties>
-        </Component>
-        <Component class="javax.swing.JTextField" name="jTextFieldPrice">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="0.0"/>
-          </Properties>
+          <Events>
+            <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jTextFieldBrandFocusGained"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabelImage">
           <Properties>
@@ -281,6 +304,7 @@
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonAddToCartActionPerformed"/>
+            <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jButtonAddToCartKeyPressed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabelTax">
@@ -292,8 +316,14 @@
         </Component>
         <Component class="javax.swing.JTextField" name="jTextFieldTax">
           <Properties>
+            <Property name="editable" type="boolean" value="false"/>
             <Property name="text" type="java.lang.String" value="0.0"/>
+            <Property name="enabled" type="boolean" value="false"/>
+            <Property name="focusable" type="boolean" value="false"/>
           </Properties>
+          <Events>
+            <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jTextFieldTaxFocusGained"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabelQuantity">
           <Properties>
@@ -318,9 +348,21 @@
         <Component class="javax.swing.JTextField" name="jTextFieldAmount">
           <Properties>
             <Property name="editable" type="boolean" value="false"/>
-            <Property name="text" type="java.lang.String" value="0.0"/>
+            <Property name="text" type="java.lang.String" value="0.00"/>
             <Property name="focusable" type="boolean" value="false"/>
             <Property name="requestFocusEnabled" type="boolean" value="false"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="jLabelPrice">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Price"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JTextField" name="jTextFieldPrice">
+          <Properties>
+            <Property name="editable" type="boolean" value="false"/>
+            <Property name="text" type="java.lang.String" value="0.00"/>
+            <Property name="focusable" type="boolean" value="false"/>
           </Properties>
         </Component>
       </SubComponents>
@@ -357,6 +399,7 @@
       <SubComponents>
         <Component class="javax.swing.JComboBox" name="jComboBoxSearch">
           <Properties>
+            <Property name="editable" type="boolean" value="true"/>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
               <StringArray count="0"/>
             </Property>
@@ -404,18 +447,27 @@
                           <Component id="jTextFieldCustomerName" max="32767" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jLabelTotal" alignment="0" min="-2" pref="51" max="-2" attributes="0"/>
                               <Component id="jLabelPaid" alignment="0" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabelBalance" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="jLabelTaxAmount" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="jLabelTotal" alignment="0" min="-2" pref="51" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="jTextFieldBalance" pref="100" max="32767" attributes="0"/>
-                              <Component id="jTextFieldPaid" pref="100" max="32767" attributes="0"/>
-                              <Component id="jTextFieldTotal" pref="100" max="32767" attributes="0"/>
-                              <Component id="jButtonPreviewBill" alignment="0" max="32767" attributes="0"/>
+                          <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" alignment="1" attributes="0">
+                                  <Component id="jTextFieldPaid" min="-2" pref="100" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="102" attributes="0">
+                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                      <Component id="jButtonPreviewBill" alignment="0" pref="100" max="32767" attributes="0"/>
+                                      <Component id="jTextFieldTotal" pref="100" max="32767" attributes="0"/>
+                                      <Component id="jTextFieldBalance" pref="100" max="32767" attributes="0"/>
+                                      <Component id="jTextFieldTaxAmount" alignment="0" max="32767" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace max="-2" attributes="0"/>
+                              </Group>
                           </Group>
-                          <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -427,10 +479,15 @@
                   <Component id="jScrollPane1" min="-2" pref="190" max="-2" attributes="0"/>
                   <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="jLabelTotal" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jTextFieldTotal" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jTextFieldCustomerName" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabelCustomerName" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jLabelTaxAmount" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jTextFieldTaxAmount" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="jLabelTotal" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jTextFieldTotal" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
@@ -444,7 +501,7 @@
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="jButtonPreviewBill" min="-2" pref="31" max="-2" attributes="0"/>
-                  <EmptySpace max="32767" attributes="0"/>
+                  <EmptySpace pref="119" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -460,18 +517,24 @@
             <Component class="javax.swing.JTable" name="jTableBillDetail">
               <Properties>
                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                  <Table columnCount="7" rowCount="0">
+                  <Table columnCount="8" rowCount="0">
                     <Column editable="false" title="Sr. No." type="java.lang.Object"/>
                     <Column editable="false" title="Code" type="java.lang.Object"/>
                     <Column editable="false" title="Product" type="java.lang.Object"/>
                     <Column editable="false" title="Price" type="java.lang.Object"/>
                     <Column editable="false" title="Quantity" type="java.lang.Object"/>
                     <Column editable="false" title="Amount" type="java.lang.Object"/>
+                    <Column editable="false" title="Vat" type="java.lang.Object"/>
                     <Column editable="true" title="Remove" type="java.lang.Boolean"/>
                   </Table>
                 </Property>
                 <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
                   <TableColumnModel selectionModel="1">
+                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                      <Title/>
+                      <Editor/>
+                      <Renderer/>
+                    </Column>
                     <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
                       <Title/>
                       <Editor/>
@@ -529,7 +592,7 @@
         <Component class="javax.swing.JTextField" name="jTextFieldTotal">
           <Properties>
             <Property name="editable" type="boolean" value="false"/>
-            <Property name="text" type="java.lang.String" value="0.0"/>
+            <Property name="text" type="java.lang.String" value="0.00"/>
             <Property name="focusable" type="boolean" value="false"/>
             <Property name="requestFocusEnabled" type="boolean" value="false"/>
           </Properties>
@@ -549,17 +612,21 @@
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonPreviewBillActionPerformed"/>
+            <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jButtonPreviewBillKeyPressed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextFieldPaid">
           <Properties>
-            <Property name="text" type="java.lang.String" value="0.0"/>
+            <Property name="text" type="java.lang.String" value="0.00"/>
           </Properties>
+          <Events>
+            <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jTextFieldPaidFocusGained"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextFieldBalance">
           <Properties>
             <Property name="editable" type="boolean" value="false"/>
-            <Property name="text" type="java.lang.String" value="0.0"/>
+            <Property name="text" type="java.lang.String" value="0.00"/>
             <Property name="focusable" type="boolean" value="false"/>
             <Property name="requestFocusEnabled" type="boolean" value="false"/>
           </Properties>
@@ -575,10 +642,26 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextFieldCustomerName">
+          <Events>
+            <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jTextFieldCustomerNameFocusGained"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabelCustomerName">
           <Properties>
             <Property name="text" type="java.lang.String" value="Customer Name"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="jLabelTaxAmount">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="VAT Amount"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JTextField" name="jTextFieldTaxAmount">
+          <Properties>
+            <Property name="editable" type="boolean" value="false"/>
+            <Property name="text" type="java.lang.String" value="0.00"/>
+            <Property name="focusable" type="boolean" value="false"/>
+            <Property name="requestFocusEnabled" type="boolean" value="false"/>
           </Properties>
         </Component>
       </SubComponents>

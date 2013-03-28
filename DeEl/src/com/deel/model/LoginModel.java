@@ -10,7 +10,10 @@ import org.hibernate.Session;
  */
 public class LoginModel {
     public boolean authenticate(String username,String password){
-        Session session=HibernateUtil.getSessionFactory().openSession();
+        Session session = null;
+        try{
+        session=HibernateUtil.getSessionFactory().openSession();
+        }catch(Exception e){e.printStackTrace();}
         session.beginTransaction();
         String queryString="from User u where u.username= :username and u.password= :password";
         Query query=session.createQuery(queryString);

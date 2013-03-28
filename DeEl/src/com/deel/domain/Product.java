@@ -32,7 +32,7 @@ public class Product {
         this.id = id;
     }
 
-    @Column(name="code")
+    @Column(name="code", length = 6)
     public String getCode() {
         return code;
     }
@@ -40,7 +40,7 @@ public class Product {
         this.code = code;
     }
 
-    @Column(name="category")
+    @Column(name="category", length = 20)
     public String getCategory() {
         return category;
     }
@@ -48,7 +48,7 @@ public class Product {
         this.category = category;
     }
 
-    @Column(name="brand")
+    @Column(name="brand", length = 20)
     public String getBrand() {
         return brand;
     }
@@ -56,7 +56,7 @@ public class Product {
         this.brand = brand;
     }
 
-    @Column(name="image")
+    @Column(name="image", length = 20)
     public String getImage() {
         return image;
     }
@@ -64,7 +64,7 @@ public class Product {
         this.image = image;
     }
 
-    @Column(name="stock")
+    @Column(name="stock", length = 6)
     public int getStock() {
         return stock;
     }
@@ -72,7 +72,7 @@ public class Product {
         this.stock = stock;
     }
 
-    @Column(name="price")
+    @Column(name = "price")
     public float getPrice() {
         return price;
     }
@@ -80,7 +80,7 @@ public class Product {
         this.price = price;
     }
 
-    @Column(name="meta")
+    @Column(name = "meta", length = 100)
     public String getMeta() {
         return meta;
     }
@@ -88,7 +88,7 @@ public class Product {
         this.meta = meta;
     }
 
-    @Column(name="description")
+    @Column(name = "description", length = 300)
     public String getDescription() {
         return description;
     }
