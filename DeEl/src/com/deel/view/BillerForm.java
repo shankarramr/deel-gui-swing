@@ -20,9 +20,9 @@ import javax.swing.table.DefaultTableModel;
  * @author neo
  */
 public class BillerForm extends javax.swing.JFrame {
-    private static String imagePath;
     private ArrayList<String> productList;
     private DefaultTableModel dtm;
+    private static final String IMAGE_PATH = "images/";
     public static final int TABLE_BILL_DETAIL_COLUMN_SERIAL_NUMBER = 0;
     public static final int TABLE_BILL_DETAIL_COLUMN_CODE = 1;
     public static final int TABLE_BILL_DETAIL_COLUMN_PRODUCT = 2;
@@ -138,9 +138,7 @@ public class BillerForm extends javax.swing.JFrame {
                             billDetailCustomerName,
                             isGreetingMessage
                         ).doPrint();
-        if(result) {
-            
-        } else {
+        if(!result) {
             JOptionPane.showMessageDialog(null, "Unable to print", "Error in printing", JOptionPane.OK_OPTION);
         }
     }
@@ -296,8 +294,7 @@ public class BillerForm extends javax.swing.JFrame {
                     jButtonAddToCart.setEnabled(true);
                 }else{
                     jButtonAddToCart.setEnabled(false);
-                    dcbm.addElement("0");
-                    //JOptionPane.showMessageDialog(null, "All available stocks are in the cart", "No Stock", JOptionPane.ERROR_MESSAGE);
+                    dcbm.addElement("0");                    
                 }
             }else{            
                 jButtonAddToCart.setEnabled(false);
@@ -306,9 +303,9 @@ public class BillerForm extends javax.swing.JFrame {
             }
             calculateAmount();
             try{
-                jLabelImage.setIcon(new javax.swing.ImageIcon(imagePath + p.getImage()));
+                jLabelImage.setIcon(new javax.swing.ImageIcon(javax.imageio.ImageIO.read(new java.io.File(IMAGE_PATH + p.getImage()))));
                 jLabelImage.setToolTipText(p.getDescription());
-            }catch(Exception ex){ Log.e(ex.getClass().toString(), ex.getMessage()); }
+            }catch(Exception ex){ Log.e(ex.getClass().toString(), ex.getMessage());}
         }
     }
     
@@ -331,11 +328,6 @@ public class BillerForm extends javax.swing.JFrame {
     }    
       
     private void customCode(){
-        try {
-            java.util.Properties props=new java.util.Properties();
-            props.load(new java.io.FileInputStream("src/defaults.properties"));
-            imagePath=props.getProperty("imagePath");
-        } catch(Exception ex) { Log.e(ex.getClass().toString(), ex.getMessage()); }
         dtm = (DefaultTableModel) jTableBillDetail.getModel();
         jComboBoxSearch.setModel(new javax.swing.DefaultComboBoxModel());
         onSearch();
@@ -526,7 +518,7 @@ public class BillerForm extends javax.swing.JFrame {
                         .addComponent(jTextFieldCategory)
                         .addComponent(jTextFieldCode))
                     .addComponent(jTextFieldAmount, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 18, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(jPanelProductDetailLayout.createSequentialGroup()
                 .addGroup(jPanelProductDetailLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabelPrice)
@@ -536,7 +528,7 @@ public class BillerForm extends javax.swing.JFrame {
                     .addGroup(jPanelProductDetailLayout.createSequentialGroup()
                         .addGap(47, 47, 47)
                         .addComponent(jLabelImage, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(47, Short.MAX_VALUE))
         );
         jPanelProductDetailLayout.setVerticalGroup(
             jPanelProductDetailLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -725,7 +717,7 @@ public class BillerForm extends javax.swing.JFrame {
             .addGroup(jPanelBillDetailLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanelBillDetailLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 491, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 489, Short.MAX_VALUE)
                     .addGroup(jPanelBillDetailLayout.createSequentialGroup()
                         .addGroup(jPanelBillDetailLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabelCustomerName)
@@ -740,7 +732,7 @@ public class BillerForm extends javax.swing.JFrame {
                                         .addGroup(jPanelBillDetailLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(jTextFieldPaid, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addComponent(jTextFieldBalance, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGap(0, 78, Short.MAX_VALUE)))
+                                        .addGap(0, 99, Short.MAX_VALUE)))
                                 .addGroup(jPanelBillDetailLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanelBillDetailLayout.createSequentialGroup()
                                         .addGap(30, 30, 30)
@@ -875,8 +867,8 @@ public class BillerForm extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanelProductDetail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanelBillDetail, javax.swing.GroupLayout.DEFAULT_SIZE, 523, Short.MAX_VALUE)))
-                .addContainerGap(43, Short.MAX_VALUE))
+                        .addComponent(jPanelBillDetail, javax.swing.GroupLayout.DEFAULT_SIZE, 521, Short.MAX_VALUE)))
+                .addContainerGap(44, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

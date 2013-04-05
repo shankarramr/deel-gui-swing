@@ -129,10 +129,10 @@
                   <Group type="102" attributes="0">
                       <Component id="jPanelProductDetail" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jPanelBillDetail" pref="523" max="32767" attributes="0"/>
+                      <Component id="jPanelBillDetail" pref="521" max="32767" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace pref="43" max="32767" attributes="0"/>
+              <EmptySpace pref="44" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -183,7 +183,7 @@
                       </Group>
                       <Component id="jTextFieldAmount" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace min="0" pref="18" max="32767" attributes="0"/>
+                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
               </Group>
               <Group type="102" attributes="0">
                   <Group type="103" groupAlignment="0" attributes="0">
@@ -196,7 +196,7 @@
                           <Component id="jLabelImage" min="-2" pref="217" max="-2" attributes="0"/>
                       </Group>
                   </Group>
-                  <EmptySpace max="32767" attributes="0"/>
+                  <EmptySpace pref="47" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -449,7 +449,7 @@
               <Group type="102" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jScrollPane1" pref="491" max="32767" attributes="0"/>
+                      <Component id="jScrollPane1" pref="489" max="32767" attributes="0"/>
                       <Group type="102" alignment="0" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="jLabelCustomerName" alignment="0" min="-2" max="-2" attributes="0"/>
@@ -466,7 +466,7 @@
                                               <Component id="jTextFieldPaid" min="-2" pref="100" max="-2" attributes="0"/>
                                               <Component id="jTextFieldBalance" min="-2" pref="100" max="-2" attributes="0"/>
                                           </Group>
-                                          <EmptySpace min="0" pref="78" max="32767" attributes="0"/>
+                                          <EmptySpace min="0" pref="99" max="32767" attributes="0"/>
                                       </Group>
                                   </Group>
                                   <Group type="103" groupAlignment="0" attributes="0">
