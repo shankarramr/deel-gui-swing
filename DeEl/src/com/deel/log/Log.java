@@ -6,7 +6,7 @@ import java.util.Calendar;
 
 /**
  *
- * @author neo
+ * @author Shankar Ram (shankar2k5@gmail.com)
  */
 public class Log {
     private static final String LOG_FILE_LOCATION = "src/log.dat";

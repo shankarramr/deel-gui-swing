@@ -4,7 +4,7 @@ import java.util.Calendar;
 
 /**
  *
- * @author neo
+ * @author Shankar Ram (shankar2k5@gmail.com)
  */
 public class DateTimeTest {
     public static void main(String[] args) {

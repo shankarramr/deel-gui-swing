@@ -17,7 +17,7 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author neo
+ * @author Shankar Ram (shankar2k5@gmail.com)
  */
 public class BillerForm extends javax.swing.JFrame {
     private ArrayList<String> productList;

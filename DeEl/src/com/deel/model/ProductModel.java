@@ -8,7 +8,7 @@ import org.hibernate.Session;
 
 /**
  *
- * @author neo
+ * @author Shankar Ram (shankar2k5@gmail.com)
  */
 public class ProductModel {
     private static List<String> productList;

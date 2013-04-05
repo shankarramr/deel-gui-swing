@@ -8,7 +8,7 @@ import javax.persistence.Table;
 
 /**
  *
- * @author neo
+ * @author Shankar Ram (shankar2k5@gmail.com)
  */
 @Entity
 @Table(name="tax")

@@ -9,7 +9,7 @@ import java.awt.event.KeyEvent;
 
 /**
  *
- * @author neo
+ * @author Shankar Ram (shankar2k5@gmail.com)
  */
 public class AddProductForm extends javax.swing.JFrame {
     

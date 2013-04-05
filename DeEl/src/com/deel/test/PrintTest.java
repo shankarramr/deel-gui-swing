@@ -12,6 +12,10 @@ import static java.awt.print.Printable.PAGE_EXISTS;
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
 
+/**
+ *
+ * @author Shankar Ram (shankar2k5@gmail.com)
+ */
 
 public class PrintTest {
     public void print1(){

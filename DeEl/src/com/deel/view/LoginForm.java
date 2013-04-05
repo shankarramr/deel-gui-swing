@@ -7,7 +7,7 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author neo
+ * @author Shankar Ram (shankar2k5@gmail.com)
  */
 public class LoginForm extends javax.swing.JFrame {
     public void onLogin(){

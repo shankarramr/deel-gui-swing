@@ -8,7 +8,7 @@ import org.hibernate.service.ServiceRegistryBuilder;
 
 /**
  *
- * @author neo
+ * @author Shankar Ram (shankar2k5@gmail.com)
  */
 public class HibernateUtil {
     private static SessionFactory sessionFactory=buildSessionFactory();

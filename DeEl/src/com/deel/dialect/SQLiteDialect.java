@@ -7,6 +7,11 @@ import org.hibernate.dialect.function.StandardSQLFunction;
 import org.hibernate.dialect.function.VarArgsSQLFunction;
 import org.hibernate.type.StandardBasicTypes;
 
+/**
+ *
+ * @Taken From Internet
+ */
+
 public class SQLiteDialect extends Dialect {
 
     public SQLiteDialect() {
