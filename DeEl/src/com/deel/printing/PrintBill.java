@@ -1,6 +1,7 @@
 package com.deel.printing;
 
 import com.deel.log.Log;
+import com.deel.model.BillDetailModel;
 import com.deel.model.BillModel;
 import com.deel.model.ProductModel;
 import com.deel.view.BillerForm;
@@ -28,11 +29,18 @@ import javax.swing.table.DefaultTableModel;
 
 public class PrintBill implements Printable {
     private Properties props;
-    private final String BILL_DEFAULTS_FILE_LOCATION = "src/bill_defaults.properties";
+    private final String BILL_DEFAULTS_FILE_LOCATION = "res/bill_defaults.properties";
     private List<BillContent> billContent;
     private DefaultTableModel dtm;
     private BillContent bc;
+    private int maxLengthOfSerialNumber = 1;
+    private int maxLengthOfPrice = 1;
+    private int maxLengthOfQuantity = 1;
+    private int maxLengthOfAmount = 1;
+    private int maxLengthOfQuantityCount = 1;
+    private int maxLengthOfPaid = 1;
     private int billNumber;
+    private String numberAligner = "%0";
     private String billDetailItemCount;
     private String billDetailQuantityCount;
     private String billDetailTax;
@@ -43,7 +51,31 @@ public class PrintBill implements Printable {
     private String billDetailPaid;
     private String billDetailBalance;
     private String billDetailCustomerName;
+    private String billDetailDateTime;
     private boolean isGreetingMessage;
+    
+    private void getMaxLengthOFNumbersInBillContent() {
+        for(int i = 0; i < dtm.getRowCount(); i++) {
+            String tmpSerialNumber = dtm.getValueAt(i, BillerForm.TABLE_BILL_DETAIL_COLUMN_SERIAL_NUMBER).toString();
+            String tmpPrice = dtm.getValueAt(i, BillerForm.TABLE_BILL_DETAIL_COLUMN_PRICE).toString();
+            String tmpQuantity = dtm.getValueAt(i, BillerForm.TABLE_BILL_DETAIL_COLUMN_QUANTITY).toString();
+            String tmpAmount = dtm.getValueAt(i, BillerForm.TABLE_BILL_DETAIL_COLUMN_AMOUNT).toString();
+            if(tmpSerialNumber.length() > maxLengthOfSerialNumber) {
+                maxLengthOfSerialNumber = tmpSerialNumber.length();
+            }
+            if(tmpPrice.length() > maxLengthOfPrice) {
+                maxLengthOfPrice = tmpPrice.length();
+            }
+            if(tmpQuantity.length() > maxLengthOfQuantity) {
+                maxLengthOfQuantity = tmpQuantity.length();
+            }
+            if(tmpAmount.length() > maxLengthOfAmount) {
+                maxLengthOfAmount = tmpAmount.length();                
+            }
+        }
+        maxLengthOfQuantityCount = billDetailQuantityCount.length();
+        maxLengthOfPaid = billDetailPaid.length() + 3;
+    }
     
     private void addBillContent(String key, int value, boolean isNewLine) {
         bc = new BillContent(key, value);
@@ -61,7 +93,7 @@ public class PrintBill implements Printable {
     private int getValueAsInt(String key) {
         try {
             return Integer.parseInt(props.getProperty(key));
-        } catch(Exception ex) { Log.e(ex.getClass().toString(), ex.getMessage()); }
+        } catch(Exception ex) { Log.e(ex, true); }
         return 0;
     }
     
@@ -102,13 +134,14 @@ public class PrintBill implements Printable {
         addBillContent(getValueAsString("BILL_NUMBER"), getValueAsInt("BILL_NUMBER_POSITION"), false);        
         addBillContent(getValueAsString("SYMBOL_COLON"), getValueAsInt("BILL_NUMBER_COLON_POSITION"), false);
         billNumber = BillModel.fetchBillNumber() + 1;
-        addBillContent(String.format("%06d%n", billNumber), getValueAsInt("BILL_NUMBER_VALUE_POSITION"), false);
+        addBillContent(String.format("%06d", billNumber), getValueAsInt("BILL_NUMBER_VALUE_POSITION"), false);
         
         //Date Time
         addBillContent(getValueAsString("DATE_TIME"), getValueAsInt("DATE_TIME_POSITION"), false);        
         addBillContent(getValueAsString("SYMBOL_COLON"), getValueAsInt("DATE_TIME_COLON_POSITION"), false);        
         Calendar c = Calendar.getInstance();
-        addBillContent(String.format("%td/%tm/%ty %tH:%tM", c, c, c, c, c), getValueAsInt("DATE_TIME_VALUE_POSITION"), true);
+        billDetailDateTime = String.format("%td/%tm/%ty %tH:%tM", c, c, c, c, c);
+        addBillContent(billDetailDateTime, getValueAsInt("DATE_TIME_VALUE_POSITION"), true);
         
         //Customer Name
         addBillContent(getValueAsString("CUSTOMER_NAME"), getValueAsInt("CUSTOMER_NAME_POSITION"), false);        
@@ -127,19 +160,23 @@ public class PrintBill implements Printable {
         
         //Column Content
         for(int i = 0; i < dtm.getRowCount(); i++) {
-            String tmpSerialNumber = Integer.toString(i+1);
+            String tmpSerialNumber = dtm.getValueAt(i, BillerForm.TABLE_BILL_DETAIL_COLUMN_SERIAL_NUMBER).toString();
             String tmpProduct = dtm.getValueAt(i, BillerForm.TABLE_BILL_DETAIL_COLUMN_PRODUCT).toString();
             if(tmpProduct.length() > 12) {
                 tmpProduct = tmpProduct.substring(0, 12);
             }
-            String tmpPrice = dtm.getValueAt(i, BillerForm.TABLE_BILL_DETAIL_COLUMN_PRICE).toString();
+            String tmpPrice = dtm.getValueAt(i, BillerForm.TABLE_BILL_DETAIL_COLUMN_PRICE).toString();            
             String tmpQuantity = dtm.getValueAt(i, BillerForm.TABLE_BILL_DETAIL_COLUMN_QUANTITY).toString();
             String tmpAmount = dtm.getValueAt(i, BillerForm.TABLE_BILL_DETAIL_COLUMN_AMOUNT).toString();
-            addBillContent(tmpSerialNumber, getValueAsInt("SERIAL_NUMBER_VALUE_POSITION"), false);
+            addBillContent(String.format(numberAligner + maxLengthOfSerialNumber + "d", Integer.parseInt(tmpSerialNumber)), getValueAsInt("SERIAL_NUMBER_VALUE_POSITION"), false);
             addBillContent(tmpProduct, getValueAsInt("PRODUCT_VALUE_POSITION"), false);
-            addBillContent(tmpPrice, getValueAsInt("PRICE_VALUE_POSITION"), false);
-            addBillContent(tmpQuantity, getValueAsInt("QUANTITY_VALUE_POSITION"), false);
-            addBillContent(tmpAmount, getValueAsInt("AMOUNT_VALUE_POSITION"), true);
+            addBillContent(String.format(numberAligner + maxLengthOfPrice + ".2f", Float.parseFloat(tmpPrice)), getValueAsInt("PRICE_VALUE_POSITION"), false);
+            addBillContent(String.format(numberAligner + maxLengthOfQuantity + "d", Integer.parseInt(tmpQuantity)), getValueAsInt("QUANTITY_VALUE_POSITION"), false);
+            addBillContent(String.format(numberAligner + maxLengthOfAmount + ".2f" ,Float.parseFloat(tmpAmount)), getValueAsInt("AMOUNT_VALUE_POSITION"), true);
+            //addBillContent(tmpSerialNumber, getValueAsInt("SERIAL_NUMBER_VALUE_POSITION"), false);
+            //addBillContent(tmpPrice, getValueAsInt("PRICE_VALUE_POSITION"), false);
+            //addBillContent(tmpQuantity, getValueAsInt("QUANTITY_VALUE_POSITION"), false);
+            //addBillContent(tmpAmount, getValueAsInt("AMOUNT_VALUE_POSITION"), true);
         }
         
         //Symbol Hyphen
@@ -150,47 +187,55 @@ public class PrintBill implements Printable {
         //Bill Detail Item Count
         addBillContent(getValueAsString("TOTAL_ITEM"), getValueAsInt("TOTAL_ITEM_POSITION"), false);
         addBillContent(getValueAsString("SYMBOL_COLON"), getValueAsInt("TOTAL_ITEM_COLON_POSITION"), false);
-        addBillContent(billDetailItemCount, getValueAsInt("TOTAL_ITEM_VALUE_POSITION"), false);
+        addBillContent(String.format(numberAligner + maxLengthOfQuantityCount + "d", Integer.parseInt(billDetailItemCount)), getValueAsInt("TOTAL_ITEM_VALUE_POSITION"), false);
+        //addBillContent(billDetailItemCount, getValueAsInt("TOTAL_ITEM_VALUE_POSITION"), false);
         
         //Tax
         if(!billDetailTax.trim().equals("0")) {
             String tax = getValueAsString("TAX_IF") + " @ " + billDetailTax + "%";
-            addBillContent(tax, getValueAsInt("TAX_POSITION"), false);
+            addBillContent(tax, getValueAsInt("TAX_IF_POSITION"), false);
             addBillContent(getValueAsString("SYMBOL_COLON"), getValueAsInt("TAX_COLON_POSITION"), false);
-            addBillContent(billDetailTaxAmount, getValueAsInt("TAX_VALUE_POSITION"), true);
+            addBillContent(String.format(numberAligner + maxLengthOfPaid + ".2f", Float.parseFloat(billDetailTaxAmount)), getValueAsInt("TAX_VALUE_POSITION"), true);
+            //addBillContent(billDetailTaxAmount, getValueAsInt("TAX_VALUE_POSITION"), true);
         } else {
-            addBillContent(getValueAsString("TAX_ELSE"), getValueAsInt("TAX_POSITION"), true);
+            addBillContent(getValueAsString("TAX_ELSE"), getValueAsInt("TAX_ELSE_POSITION"), true);
         }
         
         //Bill Detail Quantity Count
         addBillContent(getValueAsString("TOTAL_QUANTITY"), getValueAsInt("TOTAL_QUANTITY_POSITION"), false);
         addBillContent(getValueAsString("SYMBOL_COLON"), getValueAsInt("TOTAL_QUANTITY_COLON_POSITION"), false);
-        addBillContent(billDetailQuantityCount, getValueAsInt("TOTAL_QUANTITY_VALUE_POSITION"), false);
+        addBillContent(String.format("%0" + maxLengthOfQuantityCount + "d", Integer.parseInt(billDetailQuantityCount)), getValueAsInt("TOTAL_QUANTITY_VALUE_POSITION"), false);
+        //addBillContent(billDetailQuantityCount, getValueAsInt("TOTAL_QUANTITY_VALUE_POSITION"), false);
         
         //Bill Detail Sub Total
         addBillContent(getValueAsString("SUB_TOTAL"), getValueAsInt("SUB_TOTAL_POSITION"), false);
         addBillContent(getValueAsString("SYMBOL_COLON"), getValueAsInt("SUB_TOTAL_COLON_POSITION"), false);
-        addBillContent(billDetailSubTotal, getValueAsInt("SUB_TOTAL_VALUE_POSITION"), true);
+        addBillContent(String.format(numberAligner + maxLengthOfPaid + ".2f", Float.parseFloat(billDetailSubTotal)), getValueAsInt("SUB_TOTAL_VALUE_POSITION"), true);
+        //addBillContent(billDetailSubTotal, getValueAsInt("SUB_TOTAL_VALUE_POSITION"), true);
         
         //Round Off
         addBillContent(getValueAsString("ROUND_OFF"), getValueAsInt("ROUND_OFF_POSITION"), false);
         addBillContent(getValueAsString("SYMBOL_COLON"), getValueAsInt("ROUND_OFF_COLON_POSITION"), false);
-        addBillContent(billDetailRoundOff, getValueAsInt("ROUND_OFF_VALUE_POSITION"), true);
+        addBillContent(String.format(numberAligner + maxLengthOfPaid + ".2f", Float.parseFloat(billDetailRoundOff)), getValueAsInt("ROUND_OFF_VALUE_POSITION"), true);
+        //addBillContent(billDetailRoundOff, getValueAsInt("ROUND_OFF_VALUE_POSITION"), true);
         
         //Bill Detail Total
         addBillContent(getValueAsString("TOTAL"), getValueAsInt("TOTAL_POSITION"), false);
         addBillContent(getValueAsString("SYMBOL_COLON"), getValueAsInt("TOTAL_COLON_POSITION"), false);
-        addBillContent(billDetailTotal, getValueAsInt("TOTAL_VALUE_POSITION"), true);
+        addBillContent(String.format(numberAligner + maxLengthOfPaid + ".2f", Float.parseFloat(billDetailTotal)), getValueAsInt("TOTAL_VALUE_POSITION"), true);
+        //addBillContent(billDetailTotal, getValueAsInt("TOTAL_VALUE_POSITION"), true);
         
         //Bill Detail Paid
         addBillContent(getValueAsString("PAID"), getValueAsInt("PAID_POSITION"), false);
         addBillContent(getValueAsString("SYMBOL_COLON"), getValueAsInt("PAID_COLON_POSITION"), false);
-        addBillContent(billDetailPaid, getValueAsInt("PAID_VALUE_POSITION"), true);
+        addBillContent(String.format(numberAligner + maxLengthOfPaid + ".2f", Float.parseFloat(billDetailPaid)), getValueAsInt("PAID_VALUE_POSITION"), true);
+        //addBillContent(billDetailPaid, getValueAsInt("PAID_VALUE_POSITION"), true);
         
         //Bill Detail Balance
         addBillContent(getValueAsString("BALANCE"), getValueAsInt("BALANCE_POSITION"), false);
         addBillContent(getValueAsString("SYMBOL_COLON"), getValueAsInt("BALANCE_COLON_POSITION"), false);
-        addBillContent(billDetailBalance, getValueAsInt("BALANCE_VALUE_POSITION"), true);
+        addBillContent(String.format(numberAligner + maxLengthOfPaid + ".2f", Float.parseFloat(billDetailBalance)), getValueAsInt("BALANCE_VALUE_POSITION"), true);
+        //addBillContent(billDetailBalance, getValueAsInt("BALANCE_VALUE_POSITION"), true);
         
         //Disclaimer
         addBillContent(getValueAsString("DISCLAIMER"), getValueAsInt("DISCLAIMER_POSITION"), true);
@@ -233,7 +278,8 @@ public class PrintBill implements Printable {
         return java.awt.print.Printable.PAGE_EXISTS;
     }    
     
-    private void prepareBillContent() {       
+    private void prepareBillContent() {
+        getMaxLengthOFNumbersInBillContent();
         prepareBillContentHeader();
         prepareBillContentBody();
         prepareBillContentFooter();
@@ -247,9 +293,16 @@ public class PrintBill implements Printable {
         try {
             printerJob.print();
             updateStocksInProduct();
-            BillModel.updateBillNumber(billNumber);
+            new BillModel().addBillNumber(billNumber);
+            new BillDetailModel().addBillDetail(billNumber, 
+                                            billDetailCustomerName, 
+                                            Float.parseFloat(billDetailTotal), 
+                                            Float.parseFloat(billDetailPaid), 
+                                            Float.parseFloat(billDetailBalance),
+                                            billDetailDateTime
+                                        );
             return true;
-        } catch(Exception ex) { Log.e(ex.getClass().toString(), ex.getMessage()); }
+        } catch(Exception ex) { Log.e(ex, true); }
         return false;
     }    
     
@@ -266,7 +319,7 @@ public class PrintBill implements Printable {
         props = new Properties();
         try {
             props.load(new FileInputStream(new File(BILL_DEFAULTS_FILE_LOCATION)));
-        } catch(Exception ex) { Log.e(ex.getClass().toString(), ex.getMessage()); }
+        } catch(Exception ex) { Log.e(ex, true); }
         billContent = new ArrayList();
         this.dtm = dtm;
         this.billDetailItemCount = billDetailItemCount;
@@ -288,7 +341,7 @@ public class PrintBill implements Printable {
             int quantity = Integer.parseInt(dtm.getValueAt(i, BillerForm.TABLE_BILL_DETAIL_COLUMN_QUANTITY).toString());
             try{
                 ProductModel.updateStocks(code, quantity);
-            } catch(Exception ex) { Log.e(ex.getClass().toString(), ex.getMessage()); }
+            } catch(Exception ex) { Log.e(ex, true); }
         }
     }
      

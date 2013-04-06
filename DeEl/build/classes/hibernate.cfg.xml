@@ -16,17 +16,18 @@
         
         <!-- SQLITE -->
         <property name="connection.driver_class">org.sqlite.JDBC</property>
-        <property name="connection.url">jdbc:sqlite:db/deel.db</property>
+        <property name="connection.url">jdbc:sqlite:res/db/deel.db</property>
         <property name="connection.username"/>
         <property name="connection.password"/>
         <property name="dialect">com.deel.dialect.SQLiteDialect</property>        
         
         <property name="show_sql">true</property>
-        <property name="hbm2dll.auto">create</property>
+        <property name="hbm2dll.auto">update</property>
         
         <mapping class="com.deel.domain.User"/>
         <mapping class="com.deel.domain.Product"/>
         <mapping class="com.deel.domain.Tax"/>
         <mapping class="com.deel.domain.Bill"/>
+        <mapping class="com.deel.domain.BillDetail"/>
     </session-factory>
 </hibernate-configuration>

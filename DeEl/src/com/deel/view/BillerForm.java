@@ -19,10 +19,11 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Shankar Ram (shankar2k5@gmail.com)
  */
+
 public class BillerForm extends javax.swing.JFrame {
     private ArrayList<String> productList;
     private DefaultTableModel dtm;
-    private static final String IMAGE_PATH = "images/";
+    private static final String IMAGE_PATH = "res/images/";
     public static final int TABLE_BILL_DETAIL_COLUMN_SERIAL_NUMBER = 0;
     public static final int TABLE_BILL_DETAIL_COLUMN_CODE = 1;
     public static final int TABLE_BILL_DETAIL_COLUMN_PRODUCT = 2;
@@ -54,7 +55,7 @@ public class BillerForm extends javax.swing.JFrame {
                 float tax = Float.parseFloat(dtm.getValueAt(i, TABLE_BILL_DETAIL_COLUMN_TAX).toString());
                 taxAmount += tax;
             }
-        } catch(Exception ex){ Log.e(ex.getClass().toString(), ex.getMessage()); }
+        } catch(Exception ex){ Log.e(ex, true); }
         jTextFieldTaxAmount.setText(String.format("%.2f", taxAmount));
     }
     
@@ -66,7 +67,7 @@ public class BillerForm extends javax.swing.JFrame {
                 float amount = Float.parseFloat(dtm.getValueAt(i, TABLE_BILL_DETAIL_COLUMN_AMOUNT).toString());
                 total += (tax + amount);
             }
-        }catch(Exception ex){ Log.e(ex.getClass().toString(), ex.getMessage()); }
+        }catch(Exception ex){ Log.e(ex, true); }
         jTextFieldSubTotal.setText(String.format("%.2f", total));
     }
 
@@ -102,12 +103,12 @@ public class BillerForm extends javax.swing.JFrame {
             if(!sTotal.equals("")) {
                 total=Float.parseFloat(sTotal);
             }
-        } catch(Exception ex){ Log.e(ex.getClass().toString(), ex.getMessage()); }
+        } catch(Exception ex){ Log.e(ex, true); }
         try {
             if(!sPaid.equals("")){
                 paid=Float.parseFloat(sPaid);
             }
-        } catch(Exception ex){ Log.e(ex.getClass().toString(), ex.getMessage()); }
+        } catch(Exception ex){ Log.e(ex, true); }
         balance = paid - total;
         jTextFieldBalance.setText(String.format("%.2f", balance));
     }
@@ -162,7 +163,7 @@ public class BillerForm extends javax.swing.JFrame {
             } else {
                 strQuantity = "1";
             }
-        } catch(Exception ex) { Log.e(ex.getClass().toString(), ex.getMessage()); }
+        } catch(Exception ex) { Log.e(ex, true); }
         if (!strPrice.trim().equals("")) {
             price = Float.parseFloat(strPrice);
         }
@@ -259,7 +260,7 @@ public class BillerForm extends javax.swing.JFrame {
             try{
                 jLabelImage.setIcon(null);
                 jLabelImage.setToolTipText(null);
-            }catch(Exception ex){ Log.e(ex.getClass().toString(), ex.getMessage()); }
+            }catch(Exception ex){ Log.e(ex, true); }
         }
         jComboBoxSearch.getEditor().selectAll();
     }
@@ -305,7 +306,7 @@ public class BillerForm extends javax.swing.JFrame {
             try{
                 jLabelImage.setIcon(new javax.swing.ImageIcon(javax.imageio.ImageIO.read(new java.io.File(IMAGE_PATH + p.getImage()))));
                 jLabelImage.setToolTipText(p.getDescription());
-            }catch(Exception ex){ Log.e(ex.getClass().toString(), ex.getMessage());}
+            }catch(Exception ex){ Log.e(ex, false);}
         }
     }
     
@@ -327,6 +328,28 @@ public class BillerForm extends javax.swing.JFrame {
         }
     }    
       
+    private void openErrorLog() {
+        try {
+            if(new java.io.File(Log.ERROR_LOG_FILE_PATH).exists()) {
+                Runtime.getRuntime().exec("C:/Windows/notepad.exe " + Log.ERROR_LOG_FILE_PATH);
+            }else {
+                JOptionPane.showMessageDialog(null, "Error Log does not exist at this time", "Error Log Not Found", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch(Exception ex) { Log.e(ex, false); }
+    }
+    
+    private void deleteErrorLog() {
+        try {
+            java.io.File f = new java.io.File(Log.ERROR_LOG_FILE_PATH);
+            if(f.exists()) {
+                f.delete();
+                JOptionPane.showMessageDialog(null, "Error Log Deleted", "Error Log deleted", JOptionPane.INFORMATION_MESSAGE);
+            }else {
+                JOptionPane.showMessageDialog(null, "Error Log does not exist at this time", "Error Log Not Found", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch(Exception ex) { Log.e(ex, false); }
+    }
+    
     private void customCode(){
         dtm = (DefaultTableModel) jTableBillDetail.getModel();
         jComboBoxSearch.setModel(new javax.swing.DefaultComboBoxModel());
@@ -394,18 +417,21 @@ public class BillerForm extends javax.swing.JFrame {
         jMenuFile = new javax.swing.JMenu();
         jMenuItemFileExit = new javax.swing.JMenuItem();
         jMenuEdit = new javax.swing.JMenu();
-        jMenuPreferences = new javax.swing.JMenu();
+        jMenuEditPreferences = new javax.swing.JMenu();
         jCheckBoxMenuItemPrefrencesDynamicSearch = new javax.swing.JCheckBoxMenuItem();
         jCheckBoxMenuItemPreferencesTax = new javax.swing.JCheckBoxMenuItem();
         jCheckBoxMenuItemManualBilling = new javax.swing.JCheckBoxMenuItem();
         jCheckBoxMenuItemPreferencesGreetingMessage = new javax.swing.JCheckBoxMenuItem();
-        jMenuItemPreferencesAddProduct = new javax.swing.JMenuItem();
+        jMenuItemEditAddProduct = new javax.swing.JMenuItem();
+        jMenuLogging = new javax.swing.JMenu();
+        jMenuItemLoggingOpenErrorLog = new javax.swing.JMenuItem();
+        jMenuItemLoggingDeleteErrorLog = new javax.swing.JMenuItem();
         jMenuHelp = new javax.swing.JMenu();
         jMenuItemHelpAbout = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("De El");
-        setPreferredSize(new java.awt.Dimension(500, 500));
+        setPreferredSize(new java.awt.Dimension(100, 100));
         setResizable(false);
 
         jPanelProductDetail.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Product Detail", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.ABOVE_TOP));
@@ -447,6 +473,7 @@ public class BillerForm extends javax.swing.JFrame {
         });
 
         jLabelImage.setBackground(new java.awt.Color(171, 138, 138));
+        jLabelImage.setToolTipText("275 x 115");
         jLabelImage.setFocusable(false);
         jLabelImage.setRequestFocusEnabled(false);
 
@@ -504,6 +531,13 @@ public class BillerForm extends javax.swing.JFrame {
             jPanelProductDetailLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelProductDetailLayout.createSequentialGroup()
                 .addGroup(jPanelProductDetailLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabelPrice)
+                    .addComponent(jLabelTax)
+                    .addComponent(jLabelQuantity)
+                    .addComponent(jLabelAmount))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanelProductDetailLayout.createSequentialGroup()
+                .addGroup(jPanelProductDetailLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabelCategory)
                     .addComponent(jLabelBrand)
                     .addComponent(jLabelCode, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -519,16 +553,10 @@ public class BillerForm extends javax.swing.JFrame {
                         .addComponent(jTextFieldCode))
                     .addComponent(jTextFieldAmount, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(jPanelProductDetailLayout.createSequentialGroup()
-                .addGroup(jPanelProductDetailLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabelPrice)
-                    .addComponent(jLabelTax)
-                    .addComponent(jLabelQuantity)
-                    .addComponent(jLabelAmount)
-                    .addGroup(jPanelProductDetailLayout.createSequentialGroup()
-                        .addGap(47, 47, 47)
-                        .addComponent(jLabelImage, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(47, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelProductDetailLayout.createSequentialGroup()
+                .addGap(0, 14, Short.MAX_VALUE)
+                .addComponent(jLabelImage, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(14, Short.MAX_VALUE))
         );
         jPanelProductDetailLayout.setVerticalGroup(
             jPanelProductDetailLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -564,7 +592,8 @@ public class BillerForm extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jButtonAddToCart, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jLabelImage, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jLabelImage, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanelSearch.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Product Search", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.ABOVE_TOP));
@@ -647,6 +676,7 @@ public class BillerForm extends javax.swing.JFrame {
 
         jButtonPrintBill.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jButtonPrintBill.setText("Print Bill");
+        jButtonPrintBill.setEnabled(false);
         jButtonPrintBill.setMaximumSize(new java.awt.Dimension(90, 40));
         jButtonPrintBill.setMinimumSize(new java.awt.Dimension(90, 40));
         jButtonPrintBill.setPreferredSize(new java.awt.Dimension(90, 40));
@@ -717,7 +747,7 @@ public class BillerForm extends javax.swing.JFrame {
             .addGroup(jPanelBillDetailLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanelBillDetailLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 489, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 512, Short.MAX_VALUE)
                     .addGroup(jPanelBillDetailLayout.createSequentialGroup()
                         .addGroup(jPanelBillDetailLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabelCustomerName)
@@ -725,33 +755,28 @@ public class BillerForm extends javax.swing.JFrame {
                             .addComponent(jLabelBalance))
                         .addGap(18, 18, 18)
                         .addGroup(jPanelBillDetailLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanelBillDetailLayout.createSequentialGroup()
-                                .addGroup(jPanelBillDetailLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jTextFieldCustomerName)
-                                    .addGroup(jPanelBillDetailLayout.createSequentialGroup()
-                                        .addGroup(jPanelBillDetailLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jTextFieldPaid, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jTextFieldBalance, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGap(0, 99, Short.MAX_VALUE)))
-                                .addGroup(jPanelBillDetailLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanelBillDetailLayout.createSequentialGroup()
-                                        .addGap(30, 30, 30)
-                                        .addComponent(jLabelTaxAmount))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelBillDetailLayout.createSequentialGroup()
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addGroup(jPanelBillDetailLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabelRoundOff)
-                                            .addComponent(jLabelSubTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jLabelTotal)))))
-                            .addGroup(jPanelBillDetailLayout.createSequentialGroup()
-                                .addComponent(jButtonPrintBill, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(141, 141, 141)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jTextFieldCustomerName, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanelBillDetailLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(jTextFieldBalance, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 121, Short.MAX_VALUE)
+                                .addComponent(jTextFieldPaid, javax.swing.GroupLayout.Alignment.LEADING))
+                            .addComponent(jButtonPrintBill, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
                         .addGroup(jPanelBillDetailLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextFieldTaxAmount, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextFieldSubTotal, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextFieldRoundOff, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextFieldTotal, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(jPanelBillDetailLayout.createSequentialGroup()
+                                .addGroup(jPanelBillDetailLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabelRoundOff)
+                                    .addComponent(jLabelTaxAmount))
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(jPanelBillDetailLayout.createSequentialGroup()
+                                .addGroup(jPanelBillDetailLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabelTotal)
+                                    .addComponent(jLabelSubTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGroup(jPanelBillDetailLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jTextFieldTotal, javax.swing.GroupLayout.DEFAULT_SIZE, 125, Short.MAX_VALUE)
+                            .addComponent(jTextFieldRoundOff)
+                            .addComponent(jTextFieldSubTotal)
+                            .addComponent(jTextFieldTaxAmount))))
                 .addContainerGap())
         );
         jPanelBillDetailLayout.setVerticalGroup(
@@ -781,7 +806,7 @@ public class BillerForm extends javax.swing.JFrame {
                     .addComponent(jLabelTotal)
                     .addComponent(jTextFieldTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButtonPrintBill, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(133, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jMenuFile.setText("File");
@@ -798,7 +823,7 @@ public class BillerForm extends javax.swing.JFrame {
 
         jMenuEdit.setText("Edit");
 
-        jMenuPreferences.setText("Preferences");
+        jMenuEditPreferences.setText("Preferences");
 
         jCheckBoxMenuItemPrefrencesDynamicSearch.setSelected(true);
         jCheckBoxMenuItemPrefrencesDynamicSearch.setText("Dynamic Search");
@@ -807,7 +832,7 @@ public class BillerForm extends javax.swing.JFrame {
                 jCheckBoxMenuItemPrefrencesDynamicSearchItemStateChanged(evt);
             }
         });
-        jMenuPreferences.add(jCheckBoxMenuItemPrefrencesDynamicSearch);
+        jMenuEditPreferences.add(jCheckBoxMenuItemPrefrencesDynamicSearch);
 
         jCheckBoxMenuItemPreferencesTax.setText("Tax");
         jCheckBoxMenuItemPreferencesTax.addItemListener(new java.awt.event.ItemListener() {
@@ -815,7 +840,7 @@ public class BillerForm extends javax.swing.JFrame {
                 jCheckBoxMenuItemPreferencesTaxItemStateChanged(evt);
             }
         });
-        jMenuPreferences.add(jCheckBoxMenuItemPreferencesTax);
+        jMenuEditPreferences.add(jCheckBoxMenuItemPreferencesTax);
 
         jCheckBoxMenuItemManualBilling.setText("Manual Billing");
         jCheckBoxMenuItemManualBilling.addItemListener(new java.awt.event.ItemListener() {
@@ -823,22 +848,42 @@ public class BillerForm extends javax.swing.JFrame {
                 jCheckBoxMenuItemManualBillingItemStateChanged(evt);
             }
         });
-        jMenuPreferences.add(jCheckBoxMenuItemManualBilling);
+        jMenuEditPreferences.add(jCheckBoxMenuItemManualBilling);
 
         jCheckBoxMenuItemPreferencesGreetingMessage.setText("Greeting Message");
-        jMenuPreferences.add(jCheckBoxMenuItemPreferencesGreetingMessage);
+        jMenuEditPreferences.add(jCheckBoxMenuItemPreferencesGreetingMessage);
 
-        jMenuItemPreferencesAddProduct.setText("Add Product");
-        jMenuItemPreferencesAddProduct.addActionListener(new java.awt.event.ActionListener() {
+        jMenuEdit.add(jMenuEditPreferences);
+
+        jMenuItemEditAddProduct.setText("Add Product");
+        jMenuItemEditAddProduct.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItemPreferencesAddProductActionPerformed(evt);
+                jMenuItemEditAddProductActionPerformed(evt);
             }
         });
-        jMenuPreferences.add(jMenuItemPreferencesAddProduct);
-
-        jMenuEdit.add(jMenuPreferences);
+        jMenuEdit.add(jMenuItemEditAddProduct);
 
         jMenuBar1.add(jMenuEdit);
+
+        jMenuLogging.setText("Logging");
+
+        jMenuItemLoggingOpenErrorLog.setText("Open Error Log");
+        jMenuItemLoggingOpenErrorLog.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemLoggingOpenErrorLogActionPerformed(evt);
+            }
+        });
+        jMenuLogging.add(jMenuItemLoggingOpenErrorLog);
+
+        jMenuItemLoggingDeleteErrorLog.setText("Delete Error Log");
+        jMenuItemLoggingDeleteErrorLog.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemLoggingDeleteErrorLogActionPerformed(evt);
+            }
+        });
+        jMenuLogging.add(jMenuItemLoggingDeleteErrorLog);
+
+        jMenuBar1.add(jMenuLogging);
 
         jMenuHelp.setText("Help");
 
@@ -863,12 +908,12 @@ public class BillerForm extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanelSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addGap(0, 448, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanelProductDetail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanelBillDetail, javax.swing.GroupLayout.DEFAULT_SIZE, 521, Short.MAX_VALUE)))
-                .addContainerGap(44, Short.MAX_VALUE))
+                        .addComponent(jPanelBillDetail, javax.swing.GroupLayout.DEFAULT_SIZE, 544, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -876,26 +921,24 @@ public class BillerForm extends javax.swing.JFrame {
                 .addGap(10, 10, 10)
                 .addComponent(jPanelSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanelProductDetail, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanelBillDetail, javax.swing.GroupLayout.DEFAULT_SIZE, 525, Short.MAX_VALUE))
-                .addContainerGap())
+                    .addComponent(jPanelBillDetail, javax.swing.GroupLayout.DEFAULT_SIZE, 480, Short.MAX_VALUE))
+                .addContainerGap(75, Short.MAX_VALUE))
         );
 
-        setSize(new java.awt.Dimension(920, 659));
+        setSize(new java.awt.Dimension(901, 678));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jTableBillDetailTableModelListener(){
-        if(dtm.getRowCount() == 0){
-            jButtonPrintBill.setEnabled(false);            
-        }
         dtm.addTableModelListener(new javax.swing.event.TableModelListener() {
 
             @Override
             public void tableChanged(javax.swing.event.TableModelEvent e) {
                 if(dtm.getRowCount() == 0) {
                     jButtonPrintBill.setEnabled(false);
+                    jTextFieldCustomerName.setText("");
                     jTextFieldPaid.setText("0.00");
                     jTextFieldBalance.setText("0.00");
                 }else {
@@ -908,7 +951,7 @@ public class BillerForm extends javax.swing.JFrame {
                     if(editingRow == rowCount - 1) {
                         try {
                             dtm.removeRow(editingRow);
-                        } catch(Exception ex){ Log.e(ex.getClass().toString(), ex.getMessage()); }
+                        } catch(Exception ex){ Log.e(ex, true); }
                     }
                     else {
                         dtm.removeRow(editingRow);
@@ -919,7 +962,7 @@ public class BillerForm extends javax.swing.JFrame {
                             int serialNumber = Integer.parseInt(dtm.getValueAt(i, TABLE_BILL_DETAIL_COLUMN_SERIAL_NUMBER).toString());
                             dtm.setValueAt(serialNumber - 1, i, TABLE_BILL_DETAIL_COLUMN_SERIAL_NUMBER);
                         }
-                    }catch(Exception ex){ Log.e(ex.getClass().toString(), ex.getMessage()); }
+                    }catch(Exception ex){ Log.e(ex, true); }
                 }
                 calculateTaxAmount();
                 calculateSubTotal();
@@ -1129,9 +1172,17 @@ public class BillerForm extends javax.swing.JFrame {
         calculateAmount();
     }//GEN-LAST:event_jComboBoxQuantityActionPerformed
 
-    private void jMenuItemPreferencesAddProductActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemPreferencesAddProductActionPerformed
+    private void jMenuItemEditAddProductActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemEditAddProductActionPerformed
         new AddProductForm();
-    }//GEN-LAST:event_jMenuItemPreferencesAddProductActionPerformed
+    }//GEN-LAST:event_jMenuItemEditAddProductActionPerformed
+
+    private void jMenuItemLoggingOpenErrorLogActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemLoggingOpenErrorLogActionPerformed
+        openErrorLog();
+    }//GEN-LAST:event_jMenuItemLoggingOpenErrorLogActionPerformed
+
+    private void jMenuItemLoggingDeleteErrorLogActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemLoggingDeleteErrorLogActionPerformed
+        deleteErrorLog();
+    }//GEN-LAST:event_jMenuItemLoggingDeleteErrorLogActionPerformed
 
     // <editor-fold defaultstate="collapsed" desc="class fields">
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -1161,12 +1212,15 @@ public class BillerForm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelTotal;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenu jMenuEdit;
+    private javax.swing.JMenu jMenuEditPreferences;
     private javax.swing.JMenu jMenuFile;
     private javax.swing.JMenu jMenuHelp;
+    private javax.swing.JMenuItem jMenuItemEditAddProduct;
     private javax.swing.JMenuItem jMenuItemFileExit;
     private javax.swing.JMenuItem jMenuItemHelpAbout;
-    private javax.swing.JMenuItem jMenuItemPreferencesAddProduct;
-    private javax.swing.JMenu jMenuPreferences;
+    private javax.swing.JMenuItem jMenuItemLoggingDeleteErrorLog;
+    private javax.swing.JMenuItem jMenuItemLoggingOpenErrorLog;
+    private javax.swing.JMenu jMenuLogging;
     private javax.swing.JPanel jPanelBillDetail;
     private javax.swing.JPanel jPanelProductDetail;
     private javax.swing.JPanel jPanelSearch;

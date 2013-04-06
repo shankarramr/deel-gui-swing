@@ -15,7 +15,7 @@ public class LoginModel {
         try {
             session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
-        } catch(Exception ex) { Log.e(ex.getClass().toString(), ex.getMessage()); }
+        } catch(Exception ex) { Log.e(ex, true); }
         String queryString="from User u where u.username= :username and u.password= :password";
         Query query=session.createQuery(queryString);
         query.setParameter("username", username);

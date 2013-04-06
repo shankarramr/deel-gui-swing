@@ -10,6 +10,7 @@ import org.hibernate.service.ServiceRegistryBuilder;
  *
  * @author Shankar Ram (shankar2k5@gmail.com)
  */
+
 public class HibernateUtil {
     private static SessionFactory sessionFactory=buildSessionFactory();
     private static ServiceRegistry serviceRegistry;
@@ -19,8 +20,8 @@ public class HibernateUtil {
             configuration.configure();
             serviceRegistry=new ServiceRegistryBuilder().applySettings(configuration.getProperties()).buildServiceRegistry();
             return new Configuration().configure().buildSessionFactory(serviceRegistry);
-        } catch (Throwable ex) {
-            Log.e(ex.getClass().toString(), ex.getMessage());
+        } catch (Exception ex) {
+            Log.e(ex, true);
             throw new ExceptionInInitializerError(ex);
         }
     }

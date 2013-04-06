@@ -6,6 +6,7 @@ package com.deel.view;
 
 import com.deel.model.ProductModel;
 import java.awt.event.KeyEvent;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -22,7 +23,13 @@ public class AddProductForm extends javax.swing.JFrame {
         String price = jTextFieldPrice.getText();
         String meta = jTextFieldMeta.getText();
         String description = jTextAreaDescription.getText();
-        ProductModel.addProduct(code, category, brand, image, stock, price, meta, description);
+        boolean result = ProductModel.addProduct(code, category, brand, image, stock, price, meta, description);
+        if(result) {
+            JOptionPane.showMessageDialog(null, "Product added successfully", "Product Added", JOptionPane.INFORMATION_MESSAGE);
+            clearFields();
+        }else {
+            JOptionPane.showMessageDialog(null, "Unable to add Product", "Unable To Add Product", JOptionPane.ERROR_MESSAGE);
+        }
     }
     
     private void quit() {
@@ -67,7 +74,6 @@ public class AddProductForm extends javax.swing.JFrame {
         jTextFieldBrand = new javax.swing.JTextField();
         jLabelImage = new javax.swing.JLabel();
         jTextFieldImage = new javax.swing.JTextField();
-        jButtonBrowse = new javax.swing.JButton();
         jLabelStock = new javax.swing.JLabel();
         jTextFieldStock = new javax.swing.JTextField();
         jLabelPrice = new javax.swing.JLabel();
@@ -78,7 +84,6 @@ public class AddProductForm extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextAreaDescription = new javax.swing.JTextArea();
         jButtonSubmit = new javax.swing.JButton();
-        jButtonCancel = new javax.swing.JButton();
         jButtonClear = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -91,8 +96,6 @@ public class AddProductForm extends javax.swing.JFrame {
         jLabelBrand.setText("Brand");
 
         jLabelImage.setText("Image");
-
-        jButtonBrowse.setText("Browse...");
 
         jLabelStock.setText("Stock");
 
@@ -118,18 +121,6 @@ public class AddProductForm extends javax.swing.JFrame {
             }
         });
 
-        jButtonCancel.setText("Cancel");
-        jButtonCancel.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonCancelActionPerformed(evt);
-            }
-        });
-        jButtonCancel.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                jButtonCancelKeyPressed(evt);
-            }
-        });
-
         jButtonClear.setText("Clear");
         jButtonClear.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -147,7 +138,7 @@ public class AddProductForm extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -158,32 +149,24 @@ public class AddProductForm extends javax.swing.JFrame {
                             .addComponent(jLabelImage)
                             .addComponent(jLabelBrand))
                         .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jButtonSubmit)
-                                .addGap(18, 18, 18)
-                                .addComponent(jButtonCancel)
-                                .addGap(18, 18, 18)
-                                .addComponent(jButtonClear))
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(jTextFieldBrand, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE)
-                                    .addComponent(jTextFieldImage)
-                                    .addComponent(jTextFieldStock)
-                                    .addComponent(jTextFieldPrice, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jTextFieldMeta, javax.swing.GroupLayout.Alignment.LEADING))
-                                .addGap(18, 18, 18)
-                                .addComponent(jButtonBrowse))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabelCategory)
-                            .addComponent(jLabelCode))
-                        .addGap(26, 26, 26)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextFieldCategory, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextFieldCode, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(43, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jTextFieldMeta, javax.swing.GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE)
+                            .addComponent(jTextFieldPrice, javax.swing.GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE)
+                            .addComponent(jTextFieldStock, javax.swing.GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE)
+                            .addComponent(jTextFieldImage, javax.swing.GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE)
+                            .addComponent(jTextFieldBrand, javax.swing.GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE)
+                            .addComponent(jTextFieldCategory)
+                            .addComponent(jTextFieldCode, javax.swing.GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE)
+                            .addComponent(jScrollPane1)))
+                    .addComponent(jLabelCategory)
+                    .addComponent(jLabelCode))
+                .addGap(89, 89, 89))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(111, 111, 111)
+                .addComponent(jButtonSubmit)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButtonClear)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -203,8 +186,7 @@ public class AddProductForm extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabelImage)
-                    .addComponent(jTextFieldImage, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonBrowse))
+                    .addComponent(jTextFieldImage, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabelStock)
@@ -220,22 +202,17 @@ public class AddProductForm extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonSubmit)
-                    .addComponent(jButtonCancel)
                     .addComponent(jButtonClear))
-                .addContainerGap(17, Short.MAX_VALUE))
+                .addContainerGap(75, Short.MAX_VALUE))
         );
 
-        setSize(new java.awt.Dimension(416, 517));
+        setSize(new java.awt.Dimension(365, 546));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jButtonCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelActionPerformed
-        quit();
-    }//GEN-LAST:event_jButtonCancelActionPerformed
 
     private void jButtonClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonClearActionPerformed
         clearFields();
@@ -248,14 +225,6 @@ public class AddProductForm extends javax.swing.JFrame {
             quit();
         }
     }//GEN-LAST:event_jButtonClearKeyPressed
-
-    private void jButtonCancelKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jButtonCancelKeyPressed
-        if(evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            quit();
-        } else if(evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
-            quit();
-        }
-    }//GEN-LAST:event_jButtonCancelKeyPressed
 
     private void jButtonSubmitKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jButtonSubmitKeyPressed
         if(evt.getKeyCode() == KeyEvent.VK_ENTER) {
@@ -270,8 +239,6 @@ public class AddProductForm extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonSubmitActionPerformed
    
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButtonBrowse;
-    private javax.swing.JButton jButtonCancel;
     private javax.swing.JButton jButtonClear;
     private javax.swing.JButton jButtonSubmit;
     private javax.swing.JLabel jLabel1;

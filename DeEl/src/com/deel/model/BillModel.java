@@ -16,18 +16,23 @@ public class BillModel {
         session.beginTransaction();        
         try {
             Bill b = (Bill) session.createQuery("from Bill b order by billNumber desc").setMaxResults(1).uniqueResult();
-            billNumber = b.getBillNumber();
-        } catch(Exception ex) { Log.e(ex.getClass().toString(), ex.getMessage()); }
+            if(b !=null) {
+                billNumber = b.getBillNumber();
+            }
+        } catch(Exception ex) { Log.e(ex, true); }
         session.close();
         return billNumber;
     }
     
-    public static void updateBillNumber(int billNumber) {
-        Session session=HibernateUtil.getSessionFactory().openSession();
-        session.beginTransaction();
+    public void addBillNumber(int billNumber) {        
         Bill b = new Bill();
         b.setBillNumber(billNumber);
-        session.save(b);
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        session.beginTransaction();
+        try {
+            session.save(b);
+            session.getTransaction().commit();            
+        } catch(Exception ex) { Log.e(ex, true); }        
         session.close();
     }
 }

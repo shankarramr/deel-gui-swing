@@ -34,7 +34,7 @@ public class LoginForm extends javax.swing.JFrame {
                     break;
                 }
             }
-        } catch(Exception ex) { Log.e(ex.getClass().toString(), ex.getMessage()); }
+        } catch(Exception ex) { Log.e(ex, false); }
         //</editor-fold>
 
         initComponents();

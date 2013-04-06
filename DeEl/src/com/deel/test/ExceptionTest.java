@@ -6,15 +6,20 @@ package com.deel.test;
  */
 public class ExceptionTest {
     public static void main(String[] args) {
+        new ExceptionTest().m1();
+    }
+    
+    private void m1() {
+        m2();
+    }
+    
+    private void m2() {        
         try {
             System.out.println(5/0);
         } catch(Exception ex) {
-            System.out.println(ex);
-            ex.printStackTrace();
-            System.out.println(ex.getClass());
-            System.out.println(ex.getMessage());
-            System.out.println(ex.getStackTrace());//
-            System.out.println(ex.getCause());
+            System.out.println("ex.getClass(): " + ex.getClass());
+            System.out.println("ex.getMessage(): " + ex.getMessage());
+            System.out.println("ex.getStackTrace(): " + ex.getStackTrace()[0]);
         }
     }
 }

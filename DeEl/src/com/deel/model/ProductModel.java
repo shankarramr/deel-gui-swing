@@ -1,6 +1,7 @@
 package com.deel.model;
 
 import com.deel.domain.Product;
+import com.deel.log.Log;
 import java.util.ArrayList;
 import java.util.List;
 import org.hibernate.Query;
@@ -19,15 +20,20 @@ public class ProductModel {
         Product product = (Product) session.createQuery("from Product p where p.code= :code").setParameter("code", code).uniqueResult();
         int stock = product.getStock() - quantity;
         product.setStock(stock);
-        session.update(product);
-        session.getTransaction().commit();
+        try {
+            session.update(product);
+            session.getTransaction().commit();
+        } catch(Exception ex) { Log.e(ex, true); }
         session.close();
     }
 
     public static Product fetchSingleProduct(String code){
+        Product product = null;
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
-        Product product = (Product) session.createQuery("from Product p where p.code= :code").setParameter("code", code).uniqueResult();
+        try {
+            product = (Product) session.createQuery("from Product p where p.code= :code").setParameter("code", code).uniqueResult();
+        } catch(Exception ex) { Log.e(ex, true); }
         session.close();
         return product;
     }
@@ -70,7 +76,8 @@ public class ProductModel {
         return productList;
     }
     
-    public static void addProduct(String code, String category, String brand, String image, String stock, String price, String meta, String description) {
+    public static boolean addProduct(String code, String category, String brand, String image, String stock, String price, String meta, String description) {
+        boolean result = false;
         Product p = new Product();
         p.setCode(code);
         p.setCategory(category);
@@ -82,7 +89,12 @@ public class ProductModel {
         p.setDescription(description);
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
-        session.save(p);
+        try{
+            session.save(p);
+            session.getTransaction().commit();
+            result = true;
+        } catch(Exception ex) { Log.e(ex, true); }        
         session.close();
+        return result;
     }
 }
