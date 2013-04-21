@@ -1,5 +1,6 @@
 package com.deel.view;
 
+import com.deel.log.Log;
 import com.deel.model.LoginModel;
 import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
@@ -33,15 +34,7 @@ public class LoginForm extends javax.swing.JFrame {
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(LoginForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(LoginForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(LoginForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(LoginForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
+        } catch(Exception ex) { Log.e(ex.getClass().toString(), ex.getMessage()); }
         //</editor-fold>
 
         initComponents();

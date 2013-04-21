@@ -1,5 +1,6 @@
 package com.deel.model;
 
+import com.deel.log.Log;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
@@ -18,7 +19,10 @@ public class HibernateUtil {
             configuration.configure();
             serviceRegistry=new ServiceRegistryBuilder().applySettings(configuration.getProperties()).buildServiceRegistry();
             return new Configuration().configure().buildSessionFactory(serviceRegistry);
-        } catch (Throwable ex) {throw new ExceptionInInitializerError(ex);}
+        } catch (Throwable ex) {
+            Log.e(ex.getClass().toString(), ex.getMessage());
+            throw new ExceptionInInitializerError(ex);
+        }
     }
 
     protected static SessionFactory getSessionFactory(){return sessionFactory;}

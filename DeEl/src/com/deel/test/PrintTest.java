@@ -12,8 +12,8 @@ import static java.awt.print.Printable.PAGE_EXISTS;
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
 
-public class PrintTest4 {
-    // 1 mm = 0.0393701 inch
+
+public class PrintTest {
     public void print1(){
         
         Paper p = new Paper();        
@@ -33,10 +33,9 @@ public class PrintTest4 {
     }
     
     public static void main(String[] args) {
-        new PrintTest4().print1();
+        new PrintTest().print1();
     }
 }
-
 class MyPrintable1 implements Printable {
     
     @Override
@@ -46,23 +45,19 @@ class MyPrintable1 implements Printable {
          }       
         
         Graphics2D g2 = (Graphics2D) g;
-        g2.setFont(new Font("Serif", Font.PLAIN, 10));
+        g2.setFont(new Font("Lucida", Font.PLAIN, 9));
         g2.setPaint(Color.BLACK);
         g2.translate(pageFormat.getImageableX(), pageFormat.getImageableY());
         int y = 10;
-        String SPACE = "          ";
-        /*for(int i = 1; i <= 50; i++){
-            String str1 = "Test " + i;
-            String str2 = "Test.Cont. " + i;
-            String str3 = "Test Cont.Cont. " + i;
-            g2.drawString(str1 + SPACE + str2 + SPACE + str3  , 0, y);
-            y += 10;
-        }*/
-        g2.drawString("A", 0, y);
-        g2.drawString("B", 100, y);
-        g2.drawString("C", 195, y);
-        g2.drawString(".", 0, y + 70);
-        
+        g2.drawString("0", 0, y);
+        g2.drawString("25", 25, y);
+        g2.drawString("50", 50, y);
+        g2.drawString("75", 75, y);
+        g2.drawString("100", 100, y);
+        g2.drawString("125", 125, y);
+        g2.drawString("150", 150, y);
+        g2.drawString("185", 185, y);
+        g2.drawString(".", 0, y + 90);        
         return PAGE_EXISTS;
     }
 }

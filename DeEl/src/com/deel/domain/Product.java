@@ -10,6 +10,7 @@ import javax.persistence.Table;
  *
  * @author neo
  */
+
 @Entity
 @Table(name="product")
 public class Product {

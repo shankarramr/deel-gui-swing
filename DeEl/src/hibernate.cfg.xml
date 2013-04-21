@@ -19,14 +19,14 @@
         <property name="connection.url">jdbc:sqlite:db/deel.db</property>
         <property name="connection.username"/>
         <property name="connection.password"/>
-        <property name="dialect">com.deel.dialect.SQLiteDialect</property>
+        <property name="dialect">com.deel.dialect.SQLiteDialect</property>        
         
-        <property name="connection.pool_size">1</property>
         <property name="show_sql">true</property>
         <property name="hbm2dll.auto">create</property>
         
         <mapping class="com.deel.domain.User"/>
         <mapping class="com.deel.domain.Product"/>
         <mapping class="com.deel.domain.Tax"/>
+        <mapping class="com.deel.domain.Bill"/>
     </session-factory>
 </hibernate-configuration>
